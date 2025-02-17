@@ -82,6 +82,7 @@ clang --version
 
 
 
+SUSFS=0
 KSU_ZIP_STR=NoKernelSU
 if [ "$2" == "ksu" ]; then
     KSU_ENABLE=1
@@ -93,13 +94,22 @@ else
     KSU_ENABLE=0
 fi
 
+if [[ "$2" == "rksu" && "$3" == "susfs" ]]; then
+    echo "RKSU and SUSFS is enabled"
+    SUSFS=1
+    curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s susfs-v1.5.5
+    KSU_ZIP_STR=RKSU_SUSFS
+elif [[ "$2" != "rksu" && "$3" == "susfs" ]]; then
+    echo "Error: This script does not currently support SUSFS for KSUs other than RKSU. Compilation terminated"
+    exit 1
+fi
 
 echo "TARGET_DEVICE: $TARGET_DEVICE"
 
 if [ $KSU_ENABLE -eq 1 ]; then
     echo "KSU is enabled"
     curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.5
-elif [ $KSU_ENABLE -eq 2 ]; then
+elif [[ $KSU_ENABLE -eq 2 && $SUSFS -eq 0 ]]; then
     echo "RKSU is enabled"
     curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s main
 else
@@ -242,8 +252,14 @@ elif [ $KSU_ENABLE -eq 2 ]; then
     scripts/config --file out/.config -e KSU
 else
     scripts/config --file out/.config -d KSU
+    scripts/config --file out/.config -d SUSFS
+    scripts/config --file out/.config -d SUSFS_HAS_MAGIC_MOUNT
 fi
 
+if [ $SUSFS -eq 1 ]; then
+    scripts/config --file out/.config -e SUSFS
+    scripts/config --file out/.config -e SUSFS_HAS_MAGIC_MOUNT
+fi
 
 scripts/config --file out/.config \
     --set-str STATIC_USERMODEHELPER_PATH /system/bin/micd \
