@@ -199,7 +199,7 @@
    \param[in] out
      !=0, pointer to the output buffer where to place result of decoding
      (decompression). If decompression is unsuccessful then content of out
-     buffer may be arbitrary.
+     buffer may be arbitrary. 
  
    \param[in] in_max
      !=0, size in bytes of the input buffer at in
