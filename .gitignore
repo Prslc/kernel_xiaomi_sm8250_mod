@@ -9,6 +9,8 @@
 #
 # Normal rules (sorted alphabetically)
 #
+
+arch/arm64/boot/dts/vendor/qcom/qcom/
 .*
 *.a
 *.asn1.[ch]
