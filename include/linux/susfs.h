@@ -8,7 +8,7 @@
 #include <linux/path.h>
 #include <linux/susfs_def.h>
 
-#define SUSFS_VERSION "v1.5.10"
+#define SUSFS_VERSION "v1.5.11"
 #if LINUX_VERSION_CODE < KERNEL_VERSION(5,0,0)
 #define SUSFS_VARIANT "NON-GKI"
 #else
@@ -29,7 +29,7 @@
 struct st_susfs_sus_path {
 	unsigned long                    target_ino;
 	char                             target_pathname[SUSFS_MAX_LEN_PATHNAME];
-	unsigned int                     i_uid;
+	unsigned int					 i_uid;
 };
 
 struct st_susfs_sus_path_list {
@@ -127,13 +127,6 @@ struct st_susfs_open_redirect_hlist {
 };
 #endif
 
-/* sus_su */
-#ifdef CONFIG_KSU_SUSFS_SUS_SU
-struct st_sus_su {
-	int         mode;
-};
-#endif
-
 /***********************/
 /* FORWARD DECLARATION */
 /***********************/
@@ -186,11 +179,6 @@ int susfs_spoof_cmdline_or_bootconfig(struct seq_file *m);
 #ifdef CONFIG_KSU_SUSFS_OPEN_REDIRECT
 int susfs_add_open_redirect(struct st_susfs_open_redirect* __user user_info);
 struct filename* susfs_get_redirected_path(unsigned long ino);
-#endif
-/* sus_su */
-#ifdef CONFIG_KSU_SUSFS_SUS_SU
-int susfs_get_sus_su_working_mode(void);
-int susfs_sus_su(struct st_sus_su* __user user_info);
 #endif
 
 int susfs_get_enabled_features(char __user* buf, size_t bufsize);

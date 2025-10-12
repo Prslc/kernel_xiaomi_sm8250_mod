@@ -6,7 +6,7 @@ on:
       target_device:
         description: 'Target device'
         required: true
-        default: 'munch'
+        default: 'alioth'
         type: choice
         options:
           - 'munch'
@@ -48,7 +48,7 @@ on:
         description: 'Additional Functions'
         required: true
         type: choice
-        default: 'no'
+        default: 'susfs-kpm'
         options:
           - 'no'
           - 'susfs-kpm'
