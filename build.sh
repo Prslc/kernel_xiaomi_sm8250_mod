@@ -310,7 +310,7 @@ SET_CONFIG(){
 
     if [ "$SuSFS_ENABLE" -eq 1 ];then
         scripts/config --file out/.config \
-            -e KSU \
+            -d KSU \
             -e KSU_SUSFS \
             -e KSU_MANUAL_HOOK \
             -d KSU_TRACEPOINT_HOOK \
