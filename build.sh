@@ -310,8 +310,7 @@ SET_CONFIG(){
 
     if [ "$SuSFS_ENABLE" -eq 1 ];then
         scripts/config --file out/.config \
-            -d KSU \
-            -e KSU_SUSFS \
+            -e KSU \
             -e KSU_MANUAL_HOOK \
             -d KSU_TRACEPOINT_HOOK \
             -e KSU_SUSFS_HAS_MAGIC_MOUNT \
@@ -328,7 +327,7 @@ SET_CONFIG(){
             -e KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG \
             -e KSU_MULTI_MANAGER_SUPPORT \
             -e KSU_SUSFS_OPEN_REDIRECT \
-            -e KSU_SUSFS_SUS_SU
+            -d KSU_SUSFS_SUS_SU
 
      else
         scripts/config --file out/.config \
